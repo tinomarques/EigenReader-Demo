@@ -1,3 +1,4 @@
+import path from "path";
 import { promises as fs } from "fs";
 import EigenReader from "@/components/EigenReader";
 
@@ -5,10 +6,12 @@ import DocumentNav from "@/components/DocumentNav";
 import DocumentSection from "@/components/DocumentSection";
 
 export default async function CustomerSupport() {
-  const file = await fs.readFile(
-    process.cwd() + "/public/timeStamps/customer-support.json",
-    "utf8",
+  const jsonPath = path.join(
+    process.cwd(),
+    "public",
+    "/timeStamps/customer-support.json",
   );
+  const file = await fs.readFile(jsonPath, "utf8");
   const timeStamps = JSON.stringify(JSON.parse(file));
 
   return (

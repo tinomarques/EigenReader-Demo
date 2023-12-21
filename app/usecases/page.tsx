@@ -1,3 +1,4 @@
+import path from "path";
 import { promises as fs } from "fs";
 import EigenReader from "@/components/EigenReader";
 
@@ -8,10 +9,12 @@ import Image from "next/image";
 import slideImage from "@/public/images/slideImage.png";
 
 export default async function UseCases() {
-  const file = await fs.readFile(
-    process.cwd() + "/public/timeStamps/use-cases.json",
-    "utf8",
+  const jsonPath = path.join(
+    process.cwd(),
+    "public",
+    "/timeStamps/use-cases.json",
   );
+  const file = await fs.readFile(jsonPath, "utf8");
   const timeStamps = JSON.stringify(JSON.parse(file));
 
   return (
