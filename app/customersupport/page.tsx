@@ -4,9 +4,6 @@ import EigenReader from "@/components/EigenReader";
 import DocumentNav from "@/components/DocumentNav";
 import DocumentSection from "@/components/DocumentSection";
 
-import Image from "next/image";
-import slideImage from "@/public/images/slideImage.png";
-
 export default async function CustomerSupport() {
   const timeStamps = await fs.readFile(
     process.cwd() + "/public/timeStamps/customer-support.json",

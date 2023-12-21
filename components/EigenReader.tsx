@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
-import { useInterval } from "usehooks-ts";
+import { useInterval, useUpdateEffect } from "usehooks-ts";
 
 import Mark from "mark.js";
 
@@ -61,21 +61,23 @@ export default function EigenReader(props: EigenReaderProps) {
     // console.log(endList.current);
   }, []);
 
-  // Audio player
+  //Audio player
   const audioPlayer = useRef<HTMLAudioElement>(null);
 
-  function startReader() {
-    if (audioPlayer.current) {
-      // Reset/Start player
-      audioPlayer.current.currentTime = 0;
+  useUpdateEffect(() => {
+    // Start/stop player
+    if (isPlaying && audioPlayer.current) {
       audioPlayer.current.play();
-      setIsPlaying(true);
-
-      // Reset currentIndex and updatedEscapedDivTextContent
+    }
+    if (!isPlaying && audioPlayer.current && divElementMark.current) {
+      audioPlayer.current.pause();
+      // Reset currentIndex, updatedEscapedDivTextContent, currentTime, and unmark
       currentIndex.current = 0;
       updatedEscapedDivTextContent.current = escapedDivTextContent.current;
+      audioPlayer.current.currentTime = 0;
+      divElementMark.current.unmark();
     }
-  }
+  }, [isPlaying]);
 
   // Update audio player currentTime much faster than allowed by callback
   useInterval(
@@ -144,8 +146,8 @@ export default function EigenReader(props: EigenReaderProps) {
 
   return (
     <div
-      className="fixed right-4 top-4 flex cursor-pointer select-none items-center gap-3 rounded-2xl border-[1px] border-gray-400 border-opacity-50 bg-gray-800 bg-opacity-10 bg-clip-padding px-6 py-3 backdrop-blur-lg backdrop-filter hover:scale-105"
-      onClick={startReader}
+      className="fixed right-4 top-4 flex cursor-pointer select-none items-center gap-3 rounded-2xl border-[1px] border-gray-400 border-opacity-50 bg-gray-800 bg-opacity-10 bg-clip-padding px-6 py-3 shadow-xl backdrop-blur-lg backdrop-filter hover:scale-105"
+      onClick={isPlaying ? () => setIsPlaying(false) : () => setIsPlaying(true)}
     >
       <audio
         ref={audioPlayer}
@@ -164,7 +166,9 @@ export default function EigenReader(props: EigenReaderProps) {
           }`}
         ></div>
       </div>
-      <h1 className="text-xl font-bold text-white">Read Aloud</h1>
+      <h1 className="text-xl font-bold text-white">
+        {isPlaying ? "Stop Reading" : "Read Aloud"}
+      </h1>
     </div>
   );
 }

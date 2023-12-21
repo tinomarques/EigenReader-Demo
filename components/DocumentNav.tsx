@@ -13,7 +13,7 @@ export default function DocumentNav(props: DocumentNavProps) {
         className="fixed left-4 top-4 text-xl font-bold text-white"
         href={"/"}
       >
-        <div className="flex cursor-pointer select-none items-center gap-3 rounded-2xl border-[1px] border-gray-400 border-opacity-50 bg-gray-800 bg-opacity-10 bg-clip-padding px-6 py-3 backdrop-blur-lg backdrop-filter hover:scale-105">
+        <div className=" flex cursor-pointer select-none items-center gap-3 rounded-2xl border-[1px] border-gray-400 border-opacity-50 bg-gray-800 bg-opacity-10 bg-clip-padding px-6 py-3 shadow-xl backdrop-blur-lg backdrop-filter hover:scale-105">
           <IoChevronBack size={32} />
         </div>
       </Link>
