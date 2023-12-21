@@ -9,7 +9,7 @@ import slideImage from "@/public/images/slideImage.png";
 
 export default async function UseCases() {
   const timeStamps = await fs.readFile(
-    process.cwd() + "/public/timeStamps/use-cases.json",
+    process.cwd() + "/app/usecases/use-cases.json",
     "utf8",
   );
 
