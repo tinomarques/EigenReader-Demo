@@ -12,7 +12,6 @@ interface EigenReaderProps {
 }
 
 export default function EigenReader(props: EigenReaderProps) {
-  // On Mount
   const [isPlaying, setIsPlaying] = useState(false);
 
   const timingOffset = useRef<number>(0);
@@ -32,6 +31,7 @@ export default function EigenReader(props: EigenReaderProps) {
   const currentIndex = useRef<number>(0);
   const currentWord = useRef<string>("");
 
+  // On Mount
   useEffect(() => {
     // Asign escaped div textContent + it's updating default, and new Mark from Id
     let divElement = document.getElementById(props.divId);
