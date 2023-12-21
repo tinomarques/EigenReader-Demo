@@ -1,5 +1,4 @@
 "use client";
-import { promises as fs } from "fs";
 import { useRef, useEffect, useState } from "react";
 import { useInterval, useUpdateEffect } from "usehooks-ts";
 
@@ -8,11 +7,11 @@ import Mark from "mark.js";
 interface EigenReaderProps {
   divId: string;
   audioSrc: string;
-  timeStampsSrc: string;
+  timeStamps: string;
   timingOffset?: number;
 }
 
-export default async function EigenReader(props: EigenReaderProps) {
+export default function EigenReader(props: EigenReaderProps) {
   // On Mount
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -33,9 +32,6 @@ export default async function EigenReader(props: EigenReaderProps) {
   const currentIndex = useRef<number>(0);
   const currentWord = useRef<string>("");
 
-  const file = await fs.readFile(process.cwd() + props.timeStampsSrc);
-  const timeStamps = JSON.parse(JSON.stringify(file));
-
   useEffect(() => {
     // Asign escaped div textContent + it's updating default, and new Mark from Id
     let divElement = document.getElementById(props.divId);
@@ -50,6 +46,7 @@ export default async function EigenReader(props: EigenReaderProps) {
     if (divElement) divElementMark.current = new Mark(divElement);
 
     // Get word start + ends (from timeStamps json) into lists
+    const timeStamps = JSON.parse(props.timeStamps);
     startList.current = timeStamps.segments.flatMap((segment: any) =>
       segment.words.map((word: any) => word.start),
     );

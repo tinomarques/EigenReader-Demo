@@ -7,13 +7,19 @@ import DocumentSection from "@/components/DocumentSection";
 import Image from "next/image";
 import slideImage from "@/public/images/slideImage.png";
 
-export default function UseCases() {
+export default async function UseCases() {
+  const file = await fs.readFile(
+    process.cwd() + "/public/timeStamps/use-cases.json",
+    "utf8",
+  );
+  const timeStamps = JSON.stringify(JSON.parse(file));
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-neutral-50">
       <EigenReader
         divId="use-cases"
         audioSrc="/audio/use-cases.mp3"
-        timeStampsSrc="/timeStamps/use-cases.json"
+        timeStamps={timeStamps}
         timingOffset={-0.55}
       />
 

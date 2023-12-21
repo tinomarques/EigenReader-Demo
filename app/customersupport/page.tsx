@@ -4,13 +4,20 @@ import EigenReader from "@/components/EigenReader";
 import DocumentNav from "@/components/DocumentNav";
 import DocumentSection from "@/components/DocumentSection";
 
-export default function CustomerSupport() {
+export default async function CustomerSupport() {
+  const file = await fs.readFile(
+    process.cwd() + "/public/timeStamps/customer-support.json",
+    "utf8",
+  );
+  const timeStamps = JSON.stringify(JSON.parse(file));
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-neutral-50">
       <EigenReader
         divId="customer-support"
         audioSrc="/audio/customer-support.mp3"
-        timeStampsSrc="/timeStamps/customer-support.json"
+        timeStamps={timeStamps}
+        timingOffset={-0.55}
       />
 
       <DocumentNav title="Customer Support" />
