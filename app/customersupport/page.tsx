@@ -6,13 +6,19 @@ import DocumentSection from "@/components/DocumentSection";
 
 export default async function CustomerSupport() {
   const file = await fs.readFile(
-    process.cwd() + "/app/timeStamps/customer-support.json",
+    process.cwd() + "/public/timeStamps/customer-support.json",
     "utf8",
   );
   const timeStamps = JSON.parse(file);
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-neutral-50">
+      <EigenReader
+        divId="customer-support"
+        audioSrc="/audio/customer-support.mp3"
+        timeStamps={timeStamps}
+      />
+
       <DocumentNav title="Customer Support" />
 
       <div id="customer-support">
