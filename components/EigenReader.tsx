@@ -7,7 +7,7 @@ import Mark from "mark.js";
 interface EigenReaderProps {
   divId: string;
   audioSrc: string;
-  timeStamps: string;
+  timeStamps: any;
   timingOffset?: number;
 }
 
@@ -46,12 +46,10 @@ export default function EigenReader(props: EigenReaderProps) {
     if (divElement) divElementMark.current = new Mark(divElement);
 
     // Get all words(from html content), and their start + ends (from timeStamps) into lists
-    let json = JSON.parse(props.timeStamps);
-
-    startList.current = json.segments.flatMap((segment: any) =>
+    startList.current = props.timeStamps.segments.flatMap((segment: any) =>
       segment.words.map((word: any) => word.start),
     );
-    endList.current = json.segments.flatMap((segment: any) =>
+    endList.current = props.timeStamps.segments.flatMap((segment: any) =>
       segment.words.map((word: any) => word.end),
     );
 

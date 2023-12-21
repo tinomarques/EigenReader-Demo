@@ -8,10 +8,11 @@ import Image from "next/image";
 import slideImage from "@/public/images/slideImage.png";
 
 export default async function UseCases() {
-  const timeStamps = await fs.readFile(
+  const file = await fs.readFile(
     process.cwd() + "/public/timeStamps/use-cases.json",
     "utf8",
   );
+  const timeStamps = JSON.parse(file);
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-neutral-50">
