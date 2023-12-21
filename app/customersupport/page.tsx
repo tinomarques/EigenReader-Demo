@@ -6,7 +6,7 @@ import DocumentSection from "@/components/DocumentSection";
 
 export default async function CustomerSupport() {
   const file = await fs.readFile(
-    process.cwd() + "/public/timeStamps/customer-support.json",
+    process.cwd() + "/app/timeStamps/customer-support.json",
     "utf8",
   );
   const timeStamps = JSON.parse(file);
