@@ -32,6 +32,23 @@ export default function EigenReader(props: EigenReaderProps) {
   const currentIndex = useRef<number>(0);
   const currentWord = useRef<string>("");
 
+  // Asign escaped div textContent + it's updating default, and new Mark from Id
+  let divElement = document.getElementById(props.divId);
+  if (divElement && divElement.textContent) {
+    escapedDivTextContent.current = divElement.textContent
+      .replace(/[/\-\\^$*+?.()|[\]{}]/g, "\\$&")
+      .toLowerCase();
+    wordList.current = escapedDivTextContent.current.split(" ");
+  }
+
+  updatedEscapedDivTextContent.current = escapedDivTextContent.current;
+  if (divElement) divElementMark.current = new Mark(divElement);
+
+  // console.log(escapedDivTextContent.current);
+  // console.log(wordList.current);
+  // console.log(startList.current);
+  // console.log(endList.current);
+
   // Get word start + ends (from timeStamps json) into lists
   const timeStamps = JSON.parse(props.timeStamps);
   startList.current = timeStamps.segments.flatMap((segment: any) =>
@@ -40,25 +57,6 @@ export default function EigenReader(props: EigenReaderProps) {
   endList.current = timeStamps.segments.flatMap((segment: any) =>
     segment.words.map((word: any) => word.end),
   );
-
-  useEffect(() => {
-    // Asign escaped div textContent + it's updating default, and new Mark from Id
-    let divElement = document.getElementById(props.divId);
-    if (divElement && divElement.textContent) {
-      escapedDivTextContent.current = divElement.textContent
-        .replace(/[/\-\\^$*+?.()|[\]{}]/g, "\\$&")
-        .toLowerCase();
-      wordList.current = escapedDivTextContent.current.split(" ");
-    }
-
-    updatedEscapedDivTextContent.current = escapedDivTextContent.current;
-    if (divElement) divElementMark.current = new Mark(divElement);
-
-    // console.log(escapedDivTextContent.current);
-    // console.log(wordList.current);
-    // console.log(startList.current);
-    // console.log(endList.current);
-  }, []);
 
   //Audio player
   const audioPlayer = useRef<HTMLAudioElement>(null);
