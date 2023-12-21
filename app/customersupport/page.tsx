@@ -20,7 +20,6 @@ export default async function CustomerSupport() {
         divId="customer-support"
         audioSrc="/audio/customer-support.mp3"
         timeStamps={timeStamps}
-        timingOffset={-0.55}
       />
 
       <DocumentNav title="Customer Support" />

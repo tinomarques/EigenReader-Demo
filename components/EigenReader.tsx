@@ -32,6 +32,15 @@ export default function EigenReader(props: EigenReaderProps) {
   const currentIndex = useRef<number>(0);
   const currentWord = useRef<string>("");
 
+  // Get word start + ends (from timeStamps json) into lists
+  const timeStamps = JSON.parse(props.timeStamps);
+  startList.current = timeStamps.segments.flatMap((segment: any) =>
+    segment.words.map((word: any) => word.start),
+  );
+  endList.current = timeStamps.segments.flatMap((segment: any) =>
+    segment.words.map((word: any) => word.end),
+  );
+
   useEffect(() => {
     // Asign escaped div textContent + it's updating default, and new Mark from Id
     let divElement = document.getElementById(props.divId);
@@ -44,15 +53,6 @@ export default function EigenReader(props: EigenReaderProps) {
 
     updatedEscapedDivTextContent.current = escapedDivTextContent.current;
     if (divElement) divElementMark.current = new Mark(divElement);
-
-    // Get word start + ends (from timeStamps json) into lists
-    const timeStamps = JSON.parse(props.timeStamps);
-    startList.current = timeStamps.segments.flatMap((segment: any) =>
-      segment.words.map((word: any) => word.start),
-    );
-    endList.current = timeStamps.segments.flatMap((segment: any) =>
-      segment.words.map((word: any) => word.end),
-    );
 
     // console.log(escapedDivTextContent.current);
     // console.log(wordList.current);
